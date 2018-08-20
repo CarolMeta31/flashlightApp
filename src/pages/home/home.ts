@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Platform } from 'ionic-angular';
+import {Flashlight} from '@ionic-native/flashlight';
 
 @Component({
   selector: 'page-home',
@@ -7,8 +8,39 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController) {
+isOn:boolean;
+
+  constructor(public navCtrl: NavController,private platform:Platform,
+  public flash:Flashlight) {
+
+    this.platform.ready().then(()=>{
+
+   this.updateFlahLightStatus()
+    })
+  }
+
+  switchOn(){
+
+    this.flash.switchOn();
+    this.updateFlahLightStatus()
 
   }
+
+
+  switchOFF(){
+    this.flash.switchOff();
+   this.updateFlahLightStatus()
+  }
+
+  toggleMethod(){
+    this.flash.toggle();
+   this.updateFlahLightStatus()
+  }
+  updateFlahLightStatus(){
+
+   this.isOn = this.flash.isSwitchedOn();
+
+  }
+
 
 }
